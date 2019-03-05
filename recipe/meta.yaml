@@ -1,5 +1,4 @@
-{% set version = "0.5-13.2" %}
-
+{% set version = '0.5-13.4' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -8,51 +7,74 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: gmp_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/gmp_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/gmp/gmp_{{ version }}.tar.gz
-  sha256: ae6b7ef8cdb67df7888aaa2b27ee387e3f4e11193e247d67d8385aa2b294a6f5
+    - {{ cran_mirror }}/src/contrib/gmp_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/gmp/gmp_{{ version }}.tar.gz
+  sha256: f05605b40fc39fc589e3a4d2f526a591a649faa45eef7f95c096e1bff8775196
 
 build:
   merge_build_host: True  # [win]
-  number: 1002
-  skip: true  # [win32]
-
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - posix                # [win]
-    - {{ compiler('c') }}        # [unix]
-    - {{ compiler('m2w64_c') }}  # [win]
-    - {{ compiler('cxx') }}        # [unix]
-    - {{ compiler('m2w64_cxx') }}  # [win]
+    - {{ compiler('c') }}        # [not win]
+    - {{ compiler('cxx') }}      # [not win]
+    - {{native}}toolchain        # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}sed               # [win]
+    - {{posix}}grep              # [win]
+    - {{posix}}autoconf
+    - {{posix}}automake          # [not win]
+    - {{posix}}automake-wrapper  # [win]
+    - {{posix}}pkg-config
+    - {{posix}}make
+    - {{posix}}coreutils         # [win]
+    - {{posix}}zip               # [win]
   host:
     - r-base
     - {{native}}gmp >=5.0.1,<7
-
   run:
     - r-base
     - {{native}}gmp >=5.0.1,<7
+    - {{native}}gcc-libs         # [win]
 
 test:
   commands:
-    - $R -e "library('gmp')"  # [not win]
+    - $R -e "library('gmp')"           # [not win]
     - "\"%R%\" -e \"library('gmp')\""  # [win]
 
 about:
-  home: http://mulcyber.toulouse.inra.fr/projects/gmp
+  home: https://CRAN.R-project.org/package=gmp
   license: GPL
   summary: Multiple Precision Arithmetic (big integers and rationals, prime number tests, matrix
     computation), "arithmetic without limitations" using the C library GMP (GNU Multiple
     Precision Arithmetic).
   license_family: GPL
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
 
 extra:
   recipe-maintainers:
-    - dpryan79
-    - johanneskoester
-    - bgruening
+    - conda-forge/r
+
+# Package: gmp
+# Version: 0.5-13.4
+# Date: 2019-02-21
+# Title: Multiple Precision Arithmetic
+# Author: Antoine Lucas, Immanuel Scholz, Rainer Boehme <rb-gmp@reflex-studio.de>, Sylvain Jasson <jasson@toulouse.inra.fr>, Martin Maechler <maechler@stat.math.ethz.ch>
+# Maintainer: Antoine Lucas <antoinelucas@gmail.com>
+# Description: Multiple Precision Arithmetic (big integers and rationals, prime number tests, matrix computation), "arithmetic without limitations" using the C library GMP (GNU Multiple Precision Arithmetic).
+# Depends: R (>= 3.0.0)
+# Imports: methods
+# Suggests: Rmpfr
+# SystemRequirements: gmp (>= 4.2.3)
+# License: GPL
+# BuildResaveData: no
+# LazyDataNote: not available, as we use data/*.R *and* our classes
+# NeedsCompilation: yes
+# Packaged: 2019-03-01 10:51:01 UTC; l0413674
+# Repository: CRAN
+# Date/Publication: 2019-03-01 22:00:10 UTC
