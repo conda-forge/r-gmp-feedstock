@@ -1,4 +1,4 @@
-{% set version = "0.5-13.6" %}
+{% set version = "0.5-14" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,11 +10,11 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/gmp_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/gmp/gmp_{{ version }}.tar.gz
-  sha256: 39a61618cc9eeabd00665cc5f24721e75f0dec8268059a0d18c907c2adf85a48
+  sha256: 5c18dd08bb5a79c15a645840d1b5f18766d9e9b8894197c6679518f443f032aa
 
 build:
-  merge_build_host: True  # [win]
-  number: 1
+  merge_build_host: true  # [win]
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
@@ -51,11 +51,9 @@ test:
 about:
   home: https://CRAN.R-project.org/package=gmp
   license: GPL
-  summary: Multiple Precision Arithmetic (big integers and rationals, prime number tests, matrix
-    computation), "arithmetic without limitations" using the C library GMP (GNU Multiple
-    Precision Arithmetic).
+  summary: Multiple Precision Arithmetic (big integers and rationals, prime number tests, matrix computation), "arithmetic without limitations" using the C library GMP (GNU Multiple Precision Arithmetic).
   license_family: GPL
-  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
+  license_file: {{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3
 
 extra:
   recipe-maintainers:
