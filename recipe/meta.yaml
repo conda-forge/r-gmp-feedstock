@@ -1,4 +1,4 @@
-{% set version = "0.6-0" %}
+{% set version = "0.6-1" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,7 +10,7 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/gmp_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/gmp/gmp_{{ version }}.tar.gz
-  sha256: accbdbd3e2bf42c9f5145f15b534ca3b1b4399b665149a6a33ae40234dbe3bb1
+  sha256: 20d90cb783139825a6eacd0bb4283f24742fff88fa6fe0c849e1deec2a3e3487
 
 build:
   merge_build_host: true  # [win]
