@@ -3,7 +3,7 @@ About r-gmp
 
 Home: https://CRAN.R-project.org/package=gmp
 
-Package license: GPL
+Package license: GPL-2.0-or-later
 
 Feedstock license: BSD-3-Clause
 
