@@ -1,6 +1,5 @@
 {% set version = "0.7-4" %}
 {% set posix = 'm2-' if win else '' %}
-{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: r-gmp
@@ -13,8 +12,7 @@ source:
   sha256: a7d6b40f77d2619c11db5170b8f47336f7c5fa1db7eed0ac9d8a432e41053919
 
 build:
-  merge_build_host: true  # [win]
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
@@ -23,7 +21,9 @@ requirements:
   build:
     - cross-r-base {{ r_base }}  # [build_platform != target_platform]
     - {{ compiler('c') }}              # [not win]
+    - {{ stdlib("c") }}                # [not win]
     - {{ compiler('m2w64_c') }}        # [win]
+    - {{ stdlib("m2w64_c") }}          # [win]
     - {{ compiler('cxx') }}            # [not win]
     - {{ compiler('m2w64_cxx') }}      # [win]
     - {{ posix }}filesystem        # [win]
@@ -38,11 +38,10 @@ requirements:
     - {{ posix }}zip               # [win]
   host:
     - r-base
-    - {{ native }}gmp >=5.0.1,<7
+    - gmp >=5.0.1,<7
   run:
     - r-base
-    - {{ native }}gmp >=5.0.1,<7
-    - {{ native }}gcc-libs         # [win]
+    - gmp >=5.0.1,<7
 
 test:
   commands:
