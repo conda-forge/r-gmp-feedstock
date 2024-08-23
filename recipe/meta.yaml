@@ -1,4 +1,4 @@
-{% set version = "0.7-4" %}
+{% set version = "0.7-5" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
@@ -9,10 +9,10 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/gmp_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/gmp/gmp_{{ version }}.tar.gz
-  sha256: a7d6b40f77d2619c11db5170b8f47336f7c5fa1db7eed0ac9d8a432e41053919
+  sha256: f5cdaf9afb4cd921924f16682a6d6097ff372c95b697f363704c367f9b13ce78
 
 build:
-  number: 1
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
