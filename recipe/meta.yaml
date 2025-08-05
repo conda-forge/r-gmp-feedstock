@@ -12,20 +12,24 @@ source:
   sha256: f5cdaf9afb4cd921924f16682a6d6097ff372c95b697f363704c367f9b13ce78
 
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  missing_dso_whitelist:
+    - '*/R.dll'        # [win]
+    - '*/Rblas.dll'    # [win]
+    - '*/Rlapack.dll'  # [win]
 
 requirements:
   build:
-    - cross-r-base {{ r_base }}  # [build_platform != target_platform]
-    - {{ compiler('c') }}              # [not win]
-    - {{ stdlib("c") }}                # [not win]
-    - {{ compiler('m2w64_c') }}        # [win]
-    - {{ stdlib("m2w64_c") }}          # [win]
-    - {{ compiler('cxx') }}            # [not win]
-    - {{ compiler('m2w64_cxx') }}      # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+    - {{ compiler('c') }}          # [not win]
+    - {{ stdlib("c") }}            # [not win]
+    - {{ compiler('m2w64_c') }}    # [win]
+    - {{ stdlib("m2w64_c") }}      # [win]
+    - {{ compiler('cxx') }}        # [not win]
+    - {{ compiler('m2w64_cxx') }}  # [win]
     - {{ posix }}filesystem        # [win]
     - {{ posix }}sed               # [win]
     - {{ posix }}grep              # [win]
@@ -59,22 +63,3 @@ about:
 extra:
   recipe-maintainers:
     - conda-forge/r
-
-# Package: gmp
-# Version: 0.5-13.5
-# Date: 2019-02-21
-# Title: Multiple Precision Arithmetic
-# Author: Antoine Lucas, Immanuel Scholz, Rainer Boehme <rb-gmp@reflex-studio.de>, Sylvain Jasson <jasson@toulouse.inra.fr>, Martin Maechler <maechler@stat.math.ethz.ch>
-# Maintainer: Antoine Lucas <antoinelucas@gmail.com>
-# Description: Multiple Precision Arithmetic (big integers and rationals, prime number tests, matrix computation), "arithmetic without limitations" using the C library GMP (GNU Multiple Precision Arithmetic).
-# Depends: R (>= 3.0.0)
-# Imports: methods
-# Suggests: Rmpfr
-# SystemRequirements: gmp (>= 4.2.3)
-# License: GPL
-# BuildResaveData: no
-# LazyDataNote: not available, as we use data/*.R *and* our classes
-# NeedsCompilation: yes
-# Packaged: 2019-03-11 13:49:47 UTC; l0413674
-# Repository: CRAN
-# Date/Publication: 2019-03-11 16:00:02 UTC
